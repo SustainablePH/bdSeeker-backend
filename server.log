@@ -1,0 +1,1215 @@
+2025/12/07 01:27:05 ✓ Database connection established successfully
+2025/12/07 01:27:05 Running database migrations...
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[6.613ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.453ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[18.961ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.660ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[12.812ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[7.699ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.725ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.791ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.113ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'email') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.074ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'password_hash') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.290ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'full_name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.196ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'role') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.267ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.273ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.268ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.951ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'users' AND indexname = 'idx_users_email' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.268ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'users' AND indexname = 'idx_users_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.982ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'technologies' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.154ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[8.480ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.428ms] [34;1m[rows:-][0m SELECT * FROM "technologies" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[8.529ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'technologies' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[6.408ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.452ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.313ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'technologies' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.205ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'technologies' AND column_name = 'name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.207ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'technologies' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.176ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'technologies' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.561ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'technologies' AND indexname = 'idx_technologies_name' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.500ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'programming_languages' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.083ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[4.315ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'programming_languages'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.338ms] [34;1m[rows:-][0m SELECT * FROM "programming_languages" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[4.424ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'programming_languages' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[4.876ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'programming_languages'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.521ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'programming_languages'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.637ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'programming_languages' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'programming_languages' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.345ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'programming_languages' AND column_name = 'name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'programming_languages' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.245ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'programming_languages' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'programming_languages' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.213ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'programming_languages' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'programming_languages' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.072ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'programming_languages' AND indexname = 'idx_programming_languages_name' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.686ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.113ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[4.784ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.422ms] [34;1m[rows:-][0m SELECT * FROM "company_profiles" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[5.408ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_profiles' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[5.273ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_profiles'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.406ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_profiles'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.231ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.149ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.133ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'company_name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.135ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'description') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.122ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'website') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.117ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'location') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.129ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.115ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.113ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.998ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_profiles' AND constraint_name = 'fk_users_company_profile'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.495ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_profiles' AND indexname = 'idx_company_profiles_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.466ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_profiles' AND indexname = 'idx_company_profiles_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.436ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_technologies' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.105ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[4.786ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.492ms] [34;1m[rows:-][0m SELECT * FROM "company_technologies" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[5.502ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_technologies' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[6.518ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.441ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.274ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_technologies' AND column_name = 'company_profile_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.195ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_technologies' AND column_name = 'technology_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.012ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_technologies' AND constraint_name = 'fk_company_technologies_company_profile'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.914ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_technologies' AND constraint_name = 'fk_company_technologies_technology'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.627ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.073ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[5.826ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.669ms] [34;1m[rows:-][0m SELECT * FROM "company_ratings" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[9.172ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_ratings' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[9.735ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_ratings'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.723ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_ratings'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.588ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_ratings' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.478ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND column_name = 'company_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_ratings' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.357ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_ratings' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.389ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND column_name = 'rating') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_ratings' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.317ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_ratings' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.300ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_ratings' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.675ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND constraint_name = 'fk_company_ratings_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.681ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND constraint_name = 'fk_company_profiles_ratings'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.800ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_ratings' AND constraint_name = 'chk_company_ratings_rating'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.318ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_ratings' AND indexname = 'idx_company_ratings_company_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.237ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_ratings' AND indexname = 'idx_company_ratings_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.241ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.173ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[2.132ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.613ms] [34;1m[rows:-][0m SELECT * FROM "company_reviews" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.624ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_reviews' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.658ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_reviews'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.215ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_reviews'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.383ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.322ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'company_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.315ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.318ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'content') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.266ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'is_approved') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.289ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.292ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.261ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_reviews' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.338ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND constraint_name = 'fk_company_profiles_reviews'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.275ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_reviews' AND constraint_name = 'fk_company_reviews_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.193ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_reviews' AND indexname = 'idx_company_reviews_company_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.143ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_reviews' AND indexname = 'idx_company_reviews_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.129ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_reviews' AND indexname = 'idx_company_reviews_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.151ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.084ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.427ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.452ms] [34;1m[rows:-][0m SELECT * FROM "company_review_reactions" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.959ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_review_reactions' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.717ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_review_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.093ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_review_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.192ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.126ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND column_name = 'review_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.114ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.119ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND column_name = 'type') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.112ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.133ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.151ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND constraint_name = 'fk_company_review_reactions_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.127ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_reactions' AND constraint_name = 'fk_company_reviews_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.087ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_reactions' AND indexname = 'idx_company_review_reactions_review_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.080ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_reactions' AND indexname = 'idx_company_review_reactions_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.083ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.051ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.907ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.255ms] [34;1m[rows:-][0m SELECT * FROM "company_review_comments" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.698ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_review_comments' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.700ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_review_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.102ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_review_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.186ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.184ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'review_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.149ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'content') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.131ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'is_approved') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.146ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.130ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.140ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.159ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND constraint_name = 'fk_company_review_comments_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.147ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_comments' AND constraint_name = 'fk_company_reviews_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.119ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_comments' AND indexname = 'idx_company_review_comments_review_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.095ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_comments' AND indexname = 'idx_company_review_comments_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.078ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_comments' AND indexname = 'idx_company_review_comments_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.094ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.049ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.807ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.226ms] [34;1m[rows:-][0m SELECT * FROM "company_review_replies" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.511ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_review_replies' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.514ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'company_review_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.084ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'company_review_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.178ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.139ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND column_name = 'comment_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.151ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.127ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND column_name = 'content') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.129ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.131ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'company_review_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.154ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND constraint_name = 'fk_company_review_comments_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.127ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'company_review_replies' AND constraint_name = 'fk_company_review_replies_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.110ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_replies' AND indexname = 'idx_company_review_replies_comment_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.081ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'company_review_replies' AND indexname = 'idx_company_review_replies_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.095ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.057ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.780ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.218ms] [34;1m[rows:-][0m SELECT * FROM "developer_profiles" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.742ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_profiles' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.867ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_profiles'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.109ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'developer_profiles'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.215ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.155ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.131ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND column_name = 'bio') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.123ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.118ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.120ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_profiles' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.180ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_profiles' AND constraint_name = 'fk_users_developer_profile'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.156ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_profiles' AND indexname = 'idx_developer_profiles_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.153ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_profiles' AND indexname = 'idx_developer_profiles_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.103ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_languages' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.053ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.656ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'developer_languages'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.254ms] [34;1m[rows:-][0m SELECT * FROM "developer_languages" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.437ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_languages' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.751ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_languages'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.111ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'developer_languages'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.189ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_languages' AND column_name = 'developer_profile_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_languages' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.166ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_languages' AND column_name = 'programming_language_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_languages' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.239ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_languages' AND constraint_name = 'fk_developer_languages_developer_profile'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.168ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_languages' AND constraint_name = 'fk_developer_languages_programming_language'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.097ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_technologies' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.062ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.614ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'developer_technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.243ms] [34;1m[rows:-][0m SELECT * FROM "developer_technologies" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.392ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_technologies' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.423ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.083ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'developer_technologies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.173ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_technologies' AND column_name = 'developer_profile_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.136ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_technologies' AND column_name = 'technology_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_technologies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.139ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_technologies' AND constraint_name = 'fk_developer_technologies_developer_profile'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.122ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_technologies' AND constraint_name = 'fk_developer_technologies_technology'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.085ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.047ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.990ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.275ms] [34;1m[rows:-][0m SELECT * FROM "developer_experiences" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.733ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_experiences' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.675ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_experiences'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.102ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'developer_experiences'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.200ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.150ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'developer_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.131ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'title') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.121ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'company_name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.119ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'start_date') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.135ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'end_date') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.142ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'description') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.119ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.121ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.118ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_experiences' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.170ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_experiences' AND constraint_name = 'fk_developer_profiles_experiences'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.099ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_experiences' AND indexname = 'idx_developer_experiences_developer_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.083ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_experiences' AND indexname = 'idx_developer_experiences_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.086ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.051ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.122ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.318ms] [34;1m[rows:-][0m SELECT * FROM "developer_educations" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.827ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_educations' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.788ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_educations'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.115ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'developer_educations'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.178ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.144ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'developer_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.128ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'institution') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.165ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'degree') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.138ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'field_of_study') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.130ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'start_date') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.142ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'end_date') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.135ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'grade') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.200ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'description') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.156ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.134ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.124ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_educations' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.173ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_educations' AND constraint_name = 'fk_developer_profiles_educations'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.107ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_educations' AND indexname = 'idx_developer_educations_developer_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.176ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_educations' AND indexname = 'idx_developer_educations_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.124ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.058ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.127ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.304ms] [34;1m[rows:-][0m SELECT * FROM "developer_certificates" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.812ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_certificates' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.879ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'developer_certificates'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.120ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'developer_certificates'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.204ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.148ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'developer_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.153ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'certificate_name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'issuing_organization') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.147ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'issue_date') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.124ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'expiration_date') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.137ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'credential_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.121ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'certificate_link') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.135ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'description') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.135ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.134ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.124ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'developer_certificates' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.207ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'developer_certificates' AND constraint_name = 'fk_developer_profiles_certificates'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.102ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_certificates' AND indexname = 'idx_developer_certificates_developer_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.096ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'developer_certificates' AND indexname = 'idx_developer_certificates_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.100ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.082ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.199ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.276ms] [34;1m[rows:-][0m SELECT * FROM "job_posts" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.062ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'job_posts' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.081ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'job_posts'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.101ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'job_posts'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.246ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.169ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'company_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.148ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'title') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.140ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'description') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.145ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'salary_min') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.152ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'salary_max') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'experience_min_years') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.144ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'experience_max_years') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.142ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'work_mode') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.134ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'location') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.126ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.127ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'job_posts' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.204ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'job_posts' AND constraint_name = 'fk_company_profiles_job_posts'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.121ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'job_posts' AND indexname = 'idx_job_posts_company_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.087ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'job_posts' AND indexname = 'idx_job_posts_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.179ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.069ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.889ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.325ms] [34;1m[rows:-][0m SELECT * FROM "post_reactions" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.592ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'post_reactions' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.588ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'post_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.127ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'post_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.208ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.156ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND column_name = 'job_post_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.131ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND column_name = 'type') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.123ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.123ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_reactions' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.171ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND constraint_name = 'fk_post_reactions_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.132ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_reactions' AND constraint_name = 'fk_job_posts_reactions'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.126ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'post_reactions' AND indexname = 'idx_post_reactions_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.089ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'post_reactions' AND indexname = 'idx_post_reactions_job_post_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.092ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.050ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.868ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.293ms] [34;1m[rows:-][0m SELECT * FROM "post_comments" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.657ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'post_comments' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.770ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'post_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.099ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'post_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.197ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.165ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.125ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'job_post_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.117ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'content') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.397ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.169ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.136ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'post_comments' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.173ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND constraint_name = 'fk_post_comments_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.138ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'post_comments' AND constraint_name = 'fk_job_posts_comments'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.096ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'post_comments' AND indexname = 'idx_post_comments_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.077ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'post_comments' AND indexname = 'idx_post_comments_job_post_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.077ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'post_comments' AND indexname = 'idx_post_comments_deleted_at' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.081ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.045ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.863ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.257ms] [34;1m[rows:-][0m SELECT * FROM "comment_replies" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.591ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'comment_replies' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.528ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'comment_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.086ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'comment_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.171ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'comment_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.158ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND column_name = 'comment_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'comment_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.144ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'comment_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.164ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND column_name = 'content') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'comment_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.140ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'comment_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.139ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'comment_replies' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.169ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND constraint_name = 'fk_comment_replies_user'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.142ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'comment_replies' AND constraint_name = 'fk_post_comments_replies'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.118ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'comment_replies' AND indexname = 'idx_comment_replies_comment_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.090ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'comment_replies' AND indexname = 'idx_comment_replies_user_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.092ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND table_type = 'BASE TABLE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.053ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[1.102ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'bdseeker' AND table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.342ms] [34;1m[rows:-][0m SELECT * FROM "user_reports" LIMIT 5
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.779ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'user_reports' AND constraint_type = 'UNIQUE'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.838ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'bdseeker' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'user_reports'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.118ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'user_reports'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.188ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.140ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'reporter_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.135ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'reported_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.128ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'report_type') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'description') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.139ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'status') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.154ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'reviewed_by') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.154ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'reviewed_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.159ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.151ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.138ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND column_name = 'deleted_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'user_reports' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.187ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND constraint_name = 'fk_user_reports_reporter'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.143ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND constraint_name = 'fk_user_reports_reported'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.131ms] [34;1m[rows:1][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'user_reports' AND constraint_name = 'fk_user_reports_reviewer'
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.105ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'user_reports' AND indexname = 'idx_user_reports_reporter_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.083ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'user_reports' AND indexname = 'idx_user_reports_reported_id' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.078ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'user_reports' AND indexname = 'idx_user_reports_reviewed_by' AND schemaname = CURRENT_SCHEMA()
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/database.go:47
+[0m[33m[0.072ms] [34;1m[rows:1][0m SELECT count(*) FROM pg_indexes WHERE tablename = 'user_reports' AND indexname = 'idx_user_reports_deleted_at' AND schemaname = CURRENT_SCHEMA()
+2025/12/07 01:27:05 ✓ Database migrations completed successfully
+
+2025/12/07 01:27:05 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/database/seed.go:13
+[0m[33m[0.294ms] [34;1m[rows:1][0m SELECT count(*) FROM "users" WHERE role = 'admin' AND "users"."deleted_at" IS NULL
+2025/12/07 01:27:05 ✓ Admin user already exists
+2025/12/07 01:27:05 🚀 Server starting on 0.0.0.0:8080
+2025/12/07 01:27:05 📚 API Documentation: http://0.0.0.0:8080/api/v1/health
+
+2025/12/07 01:27:16 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:28
+[0m[33m[1.200ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE email = 'admin@bdseeker.com' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2025/12/07 01:27:16 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:22
+[0m[33m[0.293ms] [34;1m[rows:0][0m SELECT * FROM "company_profiles" WHERE "company_profiles"."user_id" = 10 AND "company_profiles"."deleted_at" IS NULL
+
+2025/12/07 01:27:16 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:22
+[0m[33m[0.302ms] [34;1m[rows:0][0m SELECT * FROM "developer_profiles" WHERE "developer_profiles"."user_id" = 10 AND "developer_profiles"."deleted_at" IS NULL
+
+2025/12/07 01:27:16 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:22
+[0m[33m[1.632ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE "users"."id" = 10 AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2025/12/07 01:32:03 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:28
+[0m[33m[0.553ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE email = 'developer@example.com' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2025/12/07 01:32:09 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:22
+[0m[33m[0.239ms] [34;1m[rows:0][0m SELECT * FROM "company_profiles" WHERE "company_profiles"."user_id" = 9 AND "company_profiles"."deleted_at" IS NULL
+
+2025/12/07 01:32:09 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:22
+[0m[33m[0.203ms] [34;1m[rows:0][0m SELECT * FROM "developer_profiles" WHERE "developer_profiles"."user_id" = 9 AND "developer_profiles"."deleted_at" IS NULL
+
+2025/12/07 01:32:09 [32m/home/bishworup11/SustainablePH/bdSeeker-backend/internal/repositories/user_repository.go:22
+[0m[33m[1.275ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE "users"."id" = 9 AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1

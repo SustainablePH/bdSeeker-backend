@@ -1,0 +1,1022 @@
+{
+	"info": {
+		"_postman_id": "bdseeker-api-collection",
+		"name": "bdSeeker Job Platform API",
+		"description": "Complete API collection for bdSeeker - A job searching platform with authentication, company profiles, developer profiles, job postings, ratings, and reviews.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register Developer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"dev_token\", jsonData.data.token);",
+									"    pm.environment.set(\"dev_user_id\", jsonData.data.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"developer@example.com\",\n  \"password\": \"password123\",\n  \"full_name\": \"John Developer\",\n  \"role\": \"developer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new developer user"
+					},
+					"response": []
+				},
+				{
+					"name": "Register Company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"company_token\", jsonData.data.token);",
+									"    pm.environment.set(\"company_user_id\", jsonData.data.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"company@example.com\",\n  \"password\": \"password123\",\n  \"full_name\": \"TechCorp Inc\",\n  \"role\": \"company\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new company user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"auth_token\", jsonData.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"developer@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with email and password"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Developer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"dev_token\", jsonData.data.token);",
+									"    pm.environment.set(\"dev_user_id\", jsonData.data.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"developer@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login as a developer user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"company_token\", jsonData.data.token);",
+									"    pm.environment.set(\"company_user_id\", jsonData.data.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"company@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login as a company user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"admin_token\", jsonData.data.token);",
+									"    pm.environment.set(\"admin_user_id\", jsonData.data.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@bdseeker.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with default admin credentials"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						},
+						"description": "Get current authenticated user information"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for user registration and login"
+		},
+		{
+			"name": "Companies",
+			"item": [
+				{
+					"name": "List Companies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "location",
+									"value": "New York",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get paginated list of companies"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Company Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies/{{company_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies",
+								"{{company_id}}"
+							]
+						},
+						"description": "Get detailed information about a specific company"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Company Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"company_id\", jsonData.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{company_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"company_name\": \"TechCorp Innovations\",\n  \"description\": \"Leading technology company specializing in AI and cloud solutions\",\n  \"website\": \"https://techcorp.com\",\n  \"location\": \"San Francisco, CA\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies"
+							]
+						},
+						"description": "Create a new company profile (requires company user authentication)"
+					},
+					"response": []
+				},
+				{
+					"name": "Rate Company",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rating\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/companies/{{company_id}}/ratings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies",
+								"{{company_id}}",
+								"ratings"
+							]
+						},
+						"description": "Rate a company (1-5 stars)"
+					},
+					"response": []
+				},
+				{
+					"name": "Review Company",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"Excellent company culture and great benefits. The team is very supportive and the projects are challenging and rewarding.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/companies/{{company_id}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies",
+								"{{company_id}}",
+								"reviews"
+							]
+						},
+						"description": "Write a review for a company (requires approval)"
+					},
+					"response": []
+				},
+				{
+					"name": "List Company Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies/{{company_id}}/reviews?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies",
+								"{{company_id}}",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get approved reviews for a company"
+					},
+					"response": []
+				}
+			],
+			"description": "Company profile management and reviews"
+		},
+		{
+			"name": "Developers",
+			"item": [
+				{
+					"name": "List Developers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/developers?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"developers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get paginated list of developers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Developer Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/developers/{{developer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"developers",
+								"{{developer_id}}"
+							]
+						},
+						"description": "Get detailed information about a specific developer"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Developer Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"developer_id\", jsonData.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bio\": \"Full-stack developer with 5+ years of experience in Go, React, and cloud technologies. Passionate about building scalable systems and clean code.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/developers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"developers"
+							]
+						},
+						"description": "Create a new developer profile (requires developer user authentication)"
+					},
+					"response": []
+				}
+			],
+			"description": "Developer profile management"
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "List Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/jobs?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "work_mode",
+									"value": "remote",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "San Francisco",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "backend",
+									"disabled": true
+								},
+								{
+									"key": "sort_by",
+									"value": "created_desc",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get paginated list of jobs with optional filters"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Jobs (Remote)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/jobs?work_mode=remote&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "work_mode",
+									"value": "remote"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search for remote jobs"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Job Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/jobs/{{job_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs",
+								"{{job_id}}"
+							]
+						},
+						"description": "Get detailed information about a specific job"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Job Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"job_id\", jsonData.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{company_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Senior Backend Developer - Go\",\n  \"description\": \"We are looking for an experienced backend developer with strong Go skills to join our team. You will be working on building scalable microservices and APIs.\",\n  \"salary_min\": 100000,\n  \"salary_max\": 150000,\n  \"experience_min_years\": 5,\n  \"experience_max_years\": 10,\n  \"work_mode\": \"remote\",\n  \"location\": \"Remote - US Only\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/jobs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs"
+							]
+						},
+						"description": "Create a new job post (requires company user authentication)"
+					},
+					"response": []
+				},
+				{
+					"name": "Apply to Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"apply\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/jobs/{{job_id}}/reactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs",
+								"{{job_id}}",
+								"reactions"
+							]
+						},
+						"description": "Apply to a job posting"
+					},
+					"response": []
+				},
+				{
+					"name": "Bookmark Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"bookmark\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/jobs/{{job_id}}/reactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs",
+								"{{job_id}}",
+								"reactions"
+							]
+						},
+						"description": "Bookmark a job for later"
+					},
+					"response": []
+				},
+				{
+					"name": "Like Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"like\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/jobs/{{job_id}}/reactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs",
+								"{{job_id}}",
+								"reactions"
+							]
+						},
+						"description": "Like a job posting"
+					},
+					"response": []
+				},
+				{
+					"name": "Comment on Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dev_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"This looks like a great opportunity! What's the tech stack?\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/jobs/{{job_id}}/comments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"jobs",
+								"{{job_id}}",
+								"comments"
+							]
+						},
+						"description": "Add a comment to a job posting"
+					},
+					"response": []
+				}
+			],
+			"description": "Job posting management and interactions"
+		},
+		{
+			"name": "Technologies & Languages",
+			"item": [
+				{
+					"name": "List Technologies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/technologies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"technologies"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "react",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get list of all technologies"
+					},
+					"response": []
+				},
+				{
+					"name": "List Programming Languages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/languages",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"languages"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "go",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get list of all programming languages"
+					},
+					"response": []
+				}
+			],
+			"description": "Lookup data for technologies and programming languages"
+		},
+		{
+			"name": "System",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check if the API server is running"
+					},
+					"response": []
+				}
+			],
+			"description": "System health and status endpoints"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080/api/v1",
+			"type": "string"
+		}
+	]
+}
