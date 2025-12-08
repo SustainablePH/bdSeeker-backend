@@ -33,11 +33,28 @@ psql -U postgres -c "CREATE DATABASE bdseeker;"
 
 ### 4️⃣ Configure Environment (30 seconds)
 
-The `.env` file is already configured with defaults. If your PostgreSQL password is different from `postgres`, edit it:
+The application uses **Viper** for configuration. You have three options:
 
+**Option A: Use existing .env file (easiest)**
 ```bash
-# Edit .env file and change DB_PASSWORD if needed
+# The .env file is already configured with defaults
+# If your PostgreSQL password is different from `postgres`, edit it:
 nano .env
+```
+
+**Option B: Set environment variables**
+```bash
+export DB_PASSWORD=your_password
+export JWT_SECRET=your-secret-key
+```
+
+**Option C: Create config.yaml (optional)**
+```yaml
+dbhost: localhost
+dbport: "5432"
+dbuser: postgres
+dbpassword: your_password
+dbname: bdseeker
 ```
 
 ### 5️⃣ Run the Server (30 seconds)
@@ -48,15 +65,23 @@ go run main.go
 
 You should see:
 ```
+2025/XX/XX XX:XX:XX No config file found, using environment variables and defaults
 ✓ Database connection established successfully
 ✓ Database migrations completed successfully
-🚀 Server starting on 0.0.0.0:8080
+🚀 Server starting on 0.0.0.0:9000
+📚 API Documentation: http://0.0.0.0:9000/api/v1/health
+🔧 Environment: development
 ```
 
 ### 6️⃣ Test It! (1 minute)
 
 ```bash
-# In a new terminal, run the test script
+# Test health check
+curl http://localhost:9000/api/v1/health
+
+# Should return: {"status":"ok"}
+
+# Run full test suite
 chmod +x test_api.sh
 ./test_api.sh
 ```
@@ -75,7 +100,7 @@ If all 26 tests pass, you're ready to go! 🎉
 
 ### Register a User
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/register \
+curl -X POST http://localhost:9000/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
@@ -87,7 +112,7 @@ curl -X POST http://localhost:8080/api/v1/auth/register \
 
 ### Login
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/login \
+curl -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
@@ -97,7 +122,7 @@ curl -X POST http://localhost:8080/api/v1/auth/login \
 
 ### List Jobs
 ```bash
-curl http://localhost:8080/api/v1/jobs
+curl http://localhost:9000/api/v1/jobs
 ```
 
 ## 🆘 Having Issues?
@@ -113,9 +138,16 @@ sudo systemctl start postgresql
 
 ### Port Already in Use?
 ```bash
-# Change port in .env
-SERVER_PORT=8081
+# Change port in .env or via environment variable
+export SERVER_PORT=8081
 ```
+
+### Configuration Issues?
+Viper reads configuration in this priority order:
+1. Environment variables (highest priority)
+2. config.yaml/config.json file
+3. .env file variables
+4. Default values (lowest priority)
 
 ### Need More Help?
 Check the full [README.md](README.md) for detailed troubleshooting.
@@ -123,3 +155,7 @@ Check the full [README.md](README.md) for detailed troubleshooting.
 ---
 
 **That's it! You're all set! 🚀**
+
+## ⚡ Performance Upgrade
+
+This backend now uses **Gin framework** (40x faster than Gorilla Mux) and **Viper** for robust configuration management!

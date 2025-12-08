@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -10,6 +9,7 @@ import (
 	"github.com/bishworup11/bdSeeker-backend/internal/models"
 	"github.com/bishworup11/bdSeeker-backend/internal/repositories"
 	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -24,18 +24,16 @@ func NewCompanyHandler() *CompanyHandler {
 }
 
 // ListCompanies GET /api/v1/companies
-func (h *CompanyHandler) ListCompanies(w http.ResponseWriter, r *http.Request) {
-	page, limit := getPaginationFromQuery(r)
-	location := r.URL.Query().Get("location")
-	
-	var techIDs []uint
-	if techIDsStr := r.URL.Query().Get("tech_ids"); techIDsStr != "" {
-		// Parse comma-separated tech IDs
-	}
+func (h *CompanyHandler) ListCompanies(c *gin.Context) {
+	page, limit := getPaginationFromQuery(c)
+	location := c.Query("location")
 
+	var techIDs []uint
+	// Parse comma-separated tech IDs if needed
+	
 	companies, total, err := h.repo.List(page, limit, location, techIDs)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch companies")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch companies"})
 		return
 	}
 
@@ -47,29 +45,35 @@ func (h *CompanyHandler) ListCompanies(w http.ResponseWriter, r *http.Request) {
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Companies retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Companies retrieved successfully",
+		"data":    result,
+	})
 }
 
 // GetCompany GET /api/v1/companies/:id
-func (h *CompanyHandler) GetCompany(w http.ResponseWriter, r *http.Request) {
-	id, err := getIDFromURL(r)
+func (h *CompanyHandler) GetCompany(c *gin.Context) {
+	id, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid company ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid company ID"})
 		return
 	}
 
 	company, err := h.repo.FindByID(id)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "Company not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "Company not found"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Company retrieved successfully", company)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Company retrieved successfully",
+		"data":    company,
+	})
 }
 
 // CreateCompany POST /api/v1/companies
-func (h *CompanyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
+func (h *CompanyHandler) CreateCompany(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
 
 	var req struct {
 		CompanyName   string `json:"company_name" validate:"required"`
@@ -79,19 +83,19 @@ func (h *CompanyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
 		TechnologyIDs []uint `json:"technology_ids"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
 	// Check if user already has a company profile
 	existing, err := h.repo.FindByUserID(userID)
 	if err == nil && existing.ID > 0 {
-		utils.RespondError(w, http.StatusBadRequest, "User already has a company profile")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User already has a company profile"})
 		return
 	}
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to check existing profile")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing profile"})
 		return
 	}
 
@@ -104,19 +108,22 @@ func (h *CompanyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.repo.Create(company); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create company")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create company"})
 		return
 	}
 
-	utils.RespondCreated(w, "Company created successfully", company)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Company created successfully",
+		"data":    company,
+	})
 }
 
 // RateCompany POST /api/v1/companies/:id/ratings
-func (h *CompanyHandler) RateCompany(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
-	companyID, err := getIDFromURL(r)
+func (h *CompanyHandler) RateCompany(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
+	companyID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid company ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid company ID"})
 		return
 	}
 
@@ -124,8 +131,8 @@ func (h *CompanyHandler) RateCompany(w http.ResponseWriter, r *http.Request) {
 		Rating int `json:"rating" validate:"required,min=1,max=5"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
@@ -135,7 +142,10 @@ func (h *CompanyHandler) RateCompany(w http.ResponseWriter, r *http.Request) {
 		// Update existing rating
 		existing.Rating = req.Rating
 		h.repo.UpdateRating(existing)
-		utils.RespondSuccess(w, "Rating updated successfully", existing)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Rating updated successfully",
+			"data":    existing,
+		})
 		return
 	}
 
@@ -147,19 +157,22 @@ func (h *CompanyHandler) RateCompany(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.repo.CreateRating(rating); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create rating")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create rating"})
 		return
 	}
 
-	utils.RespondCreated(w, "Rating created successfully", rating)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Rating created successfully",
+		"data":    rating,
+	})
 }
 
 // CreateReview POST /api/v1/companies/:id/reviews
-func (h *CompanyHandler) CreateReview(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
-	companyID, err := getIDFromURL(r)
+func (h *CompanyHandler) CreateReview(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
+	companyID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid company ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid company ID"})
 		return
 	}
 
@@ -167,8 +180,8 @@ func (h *CompanyHandler) CreateReview(w http.ResponseWriter, r *http.Request) {
 		Content string `json:"content" validate:"required"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
@@ -180,25 +193,28 @@ func (h *CompanyHandler) CreateReview(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.repo.CreateReview(review); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create review")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create review"})
 		return
 	}
 
-	utils.RespondCreated(w, "Review created successfully (pending approval)", review)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Review created successfully (pending approval)",
+		"data":    review,
+	})
 }
 
 // ListReviews GET /api/v1/companies/:id/reviews
-func (h *CompanyHandler) ListReviews(w http.ResponseWriter, r *http.Request) {
-	companyID, err := getIDFromURL(r)
+func (h *CompanyHandler) ListReviews(c *gin.Context) {
+	companyID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid company ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid company ID"})
 		return
 	}
 
-	page, limit := getPaginationFromQuery(r)
+	page, limit := getPaginationFromQuery(c)
 	reviews, total, err := h.repo.ListReviews(companyID, page, limit, true)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch reviews")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch reviews"})
 		return
 	}
 
@@ -210,5 +226,8 @@ func (h *CompanyHandler) ListReviews(w http.ResponseWriter, r *http.Request) {
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Reviews retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Reviews retrieved successfully",
+		"data":    result,
+	})
 }

@@ -25,9 +25,10 @@ Welcome! This guide will help you understand how this backend project works, eve
 
 **Tech Stack:**
 - **Language:** Go (Golang)
-- **Framework:** Gorilla Mux (for routing)
+- **Framework:** Gin Web Framework (for high-performance routing)
 - **Database:** PostgreSQL (using GORM ORM)
 - **Authentication:** JWT (JSON Web Tokens)
+- **Configuration:** Viper (multi-source config management)
 
 ---
 
@@ -391,28 +392,30 @@ Middleware runs **before** your handler. Think of it as a security guard.
 **Example:** `auth.go`
 
 ```go
-func AuthMiddleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func AuthMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
         // Step 1: Get token from header
-        token := r.Header.Get("Authorization")
+        token := c.GetHeader("Authorization")
         if token == "" {
-            utils.RespondError(w, http.StatusUnauthorized, "No token provided")
+            c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
+            c.Abort()
             return
         }
 
         // Step 2: Validate token
         claims, err := utils.ValidateToken(token)
         if err != nil {
-            utils.RespondError(w, http.StatusUnauthorized, "Invalid token")
+            c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+            c.Abort()
             return
         }
 
-        // Step 3: Add user info to request context
-        ctx := context.WithValue(r.Context(), "user_id", claims.UserID)
+        // Step 3: Add user info to Gin context
+        c.Set("user_id", claims.UserID)
         
         // Step 4: Continue to handler
-        next.ServeHTTP(w, r.WithContext(ctx))
-    })
+        c.Next()
+    }
 }
 ```
 
@@ -431,7 +434,7 @@ Let's walk through a **complete login request** with actual code:
 ### 1. Client Sends Request
 
 ```bash
-POST http://localhost:8080/api/v1/auth/login
+POST http://localhost:9000/api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -445,7 +448,7 @@ Content-Type: application/json
 **File:** `main.go`
 
 ```go
-api.HandleFunc("/auth/login", authHandler.Login).Methods("POST")
+api.POST("/auth/login", authHandler.Login)
 ```
 
 ### 3. Handler Receives Request
@@ -453,26 +456,32 @@ api.HandleFunc("/auth/login", authHandler.Login).Methods("POST")
 **File:** `internal/handlers/auth_handler.go`
 
 ```go
-func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
+func (h *AuthHandler) Login(c *gin.Context) {
     // Parse JSON body
     var req services.LoginRequest
-    json.NewDecoder(r.Body).Decode(&req)
+    if err := c.ShouldBindJSON(&req); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+        return
+    }
     
     // Validate
     if errors := utils.ValidateStruct(&req); errors != nil {
-        utils.RespondValidationError(w, errors)
+        c.JSON(http.StatusBadRequest, gin.H{"errors": errors})
         return
     }
     
     // Call service
     response, err := h.authService.Login(&req)
     if err != nil {
-        utils.RespondError(w, http.StatusUnauthorized, err.Error())
+        c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
         return
     }
     
     // Send response
-    utils.RespondSuccess(w, "Login successful", response)
+    c.JSON(http.StatusOK, gin.H{
+        "message": "Login successful",
+        "data":    response,
+    })
 }
 ```
 
@@ -682,19 +691,21 @@ func (s *AuthService) GetUserProfile(userID uint) (*models.User, error) {
 **File:** `internal/handlers/auth_handler.go`
 
 ```go
-func (h *AuthHandler) GetProfile(w http.ResponseWriter, r *http.Request) {
+func (h *AuthHandler) GetProfile(c *gin.Context) {
     // Get user ID from URL
-    vars := mux.Vars(r)
-    userID, _ := strconv.ParseUint(vars["id"], 10, 32)
+    userID, _ := strconv.ParseUint(c.Param("id"), 10, 32)
     
     // Get profile
     user, err := h.authService.GetUserProfile(uint(userID))
     if err != nil {
-        utils.RespondError(w, http.StatusNotFound, "User not found")
+        c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
         return
     }
     
-    utils.RespondSuccess(w, "Profile retrieved", user)
+    c.JSON(http.StatusOK, gin.H{
+        "message": "Profile retrieved",
+        "data":    user,
+    })
 }
 ```
 
@@ -703,13 +714,13 @@ func (h *AuthHandler) GetProfile(w http.ResponseWriter, r *http.Request) {
 **File:** `main.go`
 
 ```go
-api.HandleFunc("/users/{id}", authHandler.GetProfile).Methods("GET")
+api.GET("/users/:id", authHandler.GetProfile)
 ```
 
 ### Step 6: Test It!
 
 ```bash
-GET http://localhost:8080/api/v1/users/1
+GET http://localhost:9000/api/v1/users/1
 ```
 
 ---
@@ -757,8 +768,9 @@ Database (PostgreSQL)
 
 ## 🆘 Need Help?
 
+- **Gin Documentation:** https://gin-gonic.com/docs/
+- **Viper Documentation:** https://github.com/spf13/viper
 - **GORM Documentation:** https://gorm.io/docs/
-- **Gorilla Mux:** https://github.com/gorilla/mux
 - **Go by Example:** https://gobyexample.com/
 
 Happy coding! 🎉

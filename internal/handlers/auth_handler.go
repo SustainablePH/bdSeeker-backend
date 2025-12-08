@@ -1,14 +1,13 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/bishworup11/bdSeeker-backend/internal/middleware"
 	"github.com/bishworup11/bdSeeker-backend/internal/services"
 	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
 type AuthHandler struct {
@@ -20,99 +19,110 @@ func NewAuthHandler(authService *services.AuthService) *AuthHandler {
 }
 
 // Register handles user registration
-func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
+func (h *AuthHandler) Register(c *gin.Context) {
 	var req services.RegisterRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
 	// Validate request
 	if errors := utils.ValidateStruct(&req); errors != nil {
-		utils.RespondValidationError(w, errors)
+		c.JSON(http.StatusBadRequest, gin.H{"errors": errors})
 		return
 	}
 
 	// Register user
 	response, err := h.authService.Register(&req)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// Set HTTP-only cookie for browser clients
-	utils.SetAuthCookie(w, response.Token, 24*60*60) // 24 hours
+	utils.SetAuthCookie(c.Writer, response.Token, 24*60*60) // 24 hours
 
-	utils.RespondCreated(w, "User registered successfully", response)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "User registered successfully",
+		"data":    response,
+	})
 }
 
 // Login handles user authentication
-func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
+func (h *AuthHandler) Login(c *gin.Context) {
 	var req services.LoginRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
 	// Validate request
 	if errors := utils.ValidateStruct(&req); errors != nil {
-		utils.RespondValidationError(w, errors)
+		c.JSON(http.StatusBadRequest, gin.H{"errors": errors})
 		return
 	}
 
 	// Login user
 	response, err := h.authService.Login(&req)
 	if err != nil {
-		utils.RespondError(w, http.StatusUnauthorized, err.Error())
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
 	// Set HTTP-only cookie for browser clients
-	utils.SetAuthCookie(w, response.Token, 24*60*60) // 24 hours
+	utils.SetAuthCookie(c.Writer, response.Token, 24*60*60) // 24 hours
 
-	utils.RespondSuccess(w, "Login successful", response)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Login successful",
+		"data":    response,
+	})
 }
 
 // GetMe returns the current authenticated user's information
-func (h *AuthHandler) GetMe(w http.ResponseWriter, r *http.Request) {
-	userID, ok := middleware.GetUserID(r)
+func (h *AuthHandler) GetMe(c *gin.Context) {
+	userID, ok := middleware.GetUserID(c)
 	if !ok {
-		utils.RespondError(w, http.StatusUnauthorized, "User ID not found in context")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User ID not found in context"})
 		return
 	}
 
 	user, err := h.authService.GetUserByID(userID)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "User not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 		return
 	}
 
-	utils.RespondSuccess(w, "User retrieved successfully", user)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "User retrieved successfully",
+		"data":    user,
+	})
 }
 
 // Logout handles user logout by clearing cookies
-func (h *AuthHandler) Logout(w http.ResponseWriter, r *http.Request) {
+func (h *AuthHandler) Logout(c *gin.Context) {
 	// Clear authentication cookie
-	utils.ClearAuthCookie(w)
-	utils.ClearRefreshCookie(w)
-	utils.ClearSessionCookie(w)
+	utils.ClearAuthCookie(c.Writer)
+	utils.ClearRefreshCookie(c.Writer)
+	utils.ClearSessionCookie(c.Writer)
 
-	utils.RespondSuccess(w, "Logged out successfully", nil)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Logged out successfully",
+		"data":    nil,
+	})
 }
 
 // Helper function to get pagination params from query string
-func getPaginationFromQuery(r *http.Request) (int, int) {
-	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
-	limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))
-	
+func getPaginationFromQuery(c *gin.Context) (int, int) {
+	page, _ := strconv.Atoi(c.Query("page"))
+	limit, _ := strconv.Atoi(c.Query("limit"))
+
 	params := utils.GetPaginationParams(page, limit)
 	return params.Page, params.Limit
 }
 
 // Helper function to get ID from URL params
-func getIDFromURL(r *http.Request) (uint, error) {
-	vars := mux.Vars(r)
-	id, err := strconv.ParseUint(vars["id"], 10, 32)
+func getIDFromURL(c *gin.Context) (uint, error) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return 0, err
 	}

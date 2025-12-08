@@ -50,7 +50,7 @@ The admin user was created automatically when the server started!
 
 ### 2. Login as Admin
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/login \
+curl -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "admin@bdseeker.com",
@@ -63,7 +63,7 @@ curl -X POST http://localhost:8080/api/v1/auth/login \
 # Save the token from login response
 ADMIN_TOKEN="your_token_here"
 
-curl -X GET http://localhost:8080/api/v1/admin/stats \
+curl -X GET http://localhost:9000/api/v1/admin/stats \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 
@@ -160,21 +160,21 @@ See [ADMIN_API.md](ADMIN_API.md) for complete examples
 ### Workflow Example
 ```bash
 # 1. Login as admin
-ADMIN_TOKEN=$(curl -s -X POST http://localhost:8080/api/v1/auth/login \
+ADMIN_TOKEN=$(curl -s -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@bdseeker.com","password":"admin123"}' \
   | jq -r '.data.token')
 
 # 2. Get stats
-curl -s -X GET http://localhost:8080/api/v1/admin/stats \
+curl -s -X GET http://localhost:9000/api/v1/admin/stats \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 
 # 3. List pending reviews
-curl -s -X GET "http://localhost:8080/api/v1/admin/reviews/pending?page=1&limit=10" \
+curl -s -X GET "http://localhost:9000/api/v1/admin/reviews/pending?page=1&limit=10" \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 
 # 4. Approve a review
-curl -s -X PUT http://localhost:8080/api/v1/admin/reviews/1/approve \
+curl -s -X PUT http://localhost:9000/api/v1/admin/reviews/1/approve \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 ```
 

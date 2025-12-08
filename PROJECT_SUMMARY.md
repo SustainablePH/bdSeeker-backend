@@ -145,13 +145,13 @@
 - **Go** 1.22+ - Programming language
 - **GORM** - ORM for database operations
 - **PostgreSQL** - Relational database
-- **Gorilla Mux** - HTTP router
+- **Gin** - Modern HTTP web framework
+- **Viper** - Configuration management
 - **JWT** - Authentication tokens
 - **bcrypt** - Password hashing
 - **go-playground/validator** - Input validation
 
 ### Development Tools
-- **godotenv** - Environment configuration
 - **curl** - API testing
 - **bash** - Test automation
 

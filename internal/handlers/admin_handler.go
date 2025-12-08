@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 	"time"
 
@@ -10,12 +9,13 @@ import (
 	"github.com/bishworup11/bdSeeker-backend/internal/models"
 	"github.com/bishworup11/bdSeeker-backend/internal/repositories"
 	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 )
 
 type AdminHandler struct {
-	userRepo     *repositories.UserRepository
-	companyRepo  *repositories.CompanyRepository
-	reportRepo   *repositories.ReportRepository
+	userRepo    *repositories.UserRepository
+	companyRepo *repositories.CompanyRepository
+	reportRepo  *repositories.ReportRepository
 }
 
 func NewAdminHandler() *AdminHandler {
@@ -28,9 +28,9 @@ func NewAdminHandler() *AdminHandler {
 }
 
 // GetStats returns platform statistics
-func (h *AdminHandler) GetStats(w http.ResponseWriter, r *http.Request) {
+func (h *AdminHandler) GetStats(c *gin.Context) {
 	db := database.GetDB()
-	
+
 	var stats struct {
 		TotalUsers      int64 `json:"total_users"`
 		TotalDevelopers int64 `json:"total_developers"`
@@ -47,17 +47,20 @@ func (h *AdminHandler) GetStats(w http.ResponseWriter, r *http.Request) {
 	db.Model(&models.UserReport{}).Count(&stats.TotalReports)
 	db.Model(&models.CompanyReview{}).Where("is_approved = ?", false).Count(&stats.PendingReviews)
 
-	utils.RespondSuccess(w, "Statistics retrieved successfully", stats)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Statistics retrieved successfully",
+		"data":    stats,
+	})
 }
 
 // ListUsers returns all users with pagination
-func (h *AdminHandler) ListUsers(w http.ResponseWriter, r *http.Request) {
-	page, limit := getPaginationFromQuery(r)
-	role := r.URL.Query().Get("role")
+func (h *AdminHandler) ListUsers(c *gin.Context) {
+	page, limit := getPaginationFromQuery(c)
+	role := c.Query("role")
 
 	users, total, err := h.userRepo.List(page, limit)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch users")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
 		return
 	}
 
@@ -81,58 +84,67 @@ func (h *AdminHandler) ListUsers(w http.ResponseWriter, r *http.Request) {
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Users retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Users retrieved successfully",
+		"data":    result,
+	})
 }
 
 // ApproveReview approves a company review
-func (h *AdminHandler) ApproveReview(w http.ResponseWriter, r *http.Request) {
-	reviewID, err := getIDFromURL(r)
+func (h *AdminHandler) ApproveReview(c *gin.Context) {
+	reviewID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid review ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid review ID"})
 		return
 	}
 
 	review, err := h.companyRepo.FindReviewByID(reviewID)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "Review not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "Review not found"})
 		return
 	}
 
 	review.IsApproved = true
 	if err := h.companyRepo.UpdateReview(review); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to approve review")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to approve review"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Review approved successfully", review)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Review approved successfully",
+		"data":    review,
+	})
 }
 
 // RejectReview rejects/deletes a company review
-func (h *AdminHandler) RejectReview(w http.ResponseWriter, r *http.Request) {
-	reviewID, err := getIDFromURL(r)
+func (h *AdminHandler) RejectReview(c *gin.Context) {
+	reviewID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid review ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid review ID"})
 		return
 	}
 
 	if err := h.companyRepo.DeleteReview(reviewID); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to reject review")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to reject review"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Review rejected successfully", nil)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Review rejected successfully",
+		"data":    nil,
+	})
 }
 
 // ListPendingReviews returns all pending reviews
-func (h *AdminHandler) ListPendingReviews(w http.ResponseWriter, r *http.Request) {
-	page, limit := getPaginationFromQuery(r)
-	
+func (h *AdminHandler) ListPendingReviews(c *gin.Context) {
+	page, limit := getPaginationFromQuery(c)
+
 	db := database.GetDB()
 	var reviews []models.CompanyReview
 	var total int64
 
 	offset := (page - 1) * limit
-	
+
 	db.Model(&models.CompanyReview{}).Where("is_approved = ?", false).Count(&total)
 	err := db.Where("is_approved = ?", false).
 		Offset(offset).Limit(limit).
@@ -140,7 +152,7 @@ func (h *AdminHandler) ListPendingReviews(w http.ResponseWriter, r *http.Request
 		Find(&reviews).Error
 
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch pending reviews")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch pending reviews"})
 		return
 	}
 
@@ -152,41 +164,47 @@ func (h *AdminHandler) ListPendingReviews(w http.ResponseWriter, r *http.Request
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Pending reviews retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Pending reviews retrieved successfully",
+		"data":    result,
+	})
 }
 
 // ApproveComment approves a review comment
-func (h *AdminHandler) ApproveComment(w http.ResponseWriter, r *http.Request) {
-	commentID, err := getIDFromURL(r)
+func (h *AdminHandler) ApproveComment(c *gin.Context) {
+	commentID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid comment ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid comment ID"})
 		return
 	}
 
 	comment, err := h.companyRepo.FindReviewCommentByID(commentID)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "Comment not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "Comment not found"})
 		return
 	}
 
 	comment.IsApproved = true
 	if err := h.companyRepo.UpdateReviewComment(comment); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to approve comment")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to approve comment"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Comment approved successfully", comment)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Comment approved successfully",
+		"data":    comment,
+	})
 }
 
 // ListReports returns all user reports
-func (h *AdminHandler) ListReports(w http.ResponseWriter, r *http.Request) {
-	page, limit := getPaginationFromQuery(r)
-	status := r.URL.Query().Get("status")
-	reportType := r.URL.Query().Get("type")
+func (h *AdminHandler) ListReports(c *gin.Context) {
+	page, limit := getPaginationFromQuery(c)
+	status := c.Query("status")
+	reportType := c.Query("type")
 
 	reports, total, err := h.reportRepo.List(page, limit, status, reportType)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch reports")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch reports"})
 		return
 	}
 
@@ -198,31 +216,34 @@ func (h *AdminHandler) ListReports(w http.ResponseWriter, r *http.Request) {
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Reports retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Reports retrieved successfully",
+		"data":    result,
+	})
 }
 
 // UpdateReportStatus updates the status of a user report
-func (h *AdminHandler) UpdateReportStatus(w http.ResponseWriter, r *http.Request) {
-	reportID, err := getIDFromURL(r)
+func (h *AdminHandler) UpdateReportStatus(c *gin.Context) {
+	reportID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid report ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid report ID"})
 		return
 	}
 
-	adminID, _ := middleware.GetUserID(r)
+	adminID, _ := middleware.GetUserID(c)
 
 	var req struct {
 		Status string `json:"status" validate:"required,oneof=reviewed resolved dismissed"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
 	report, err := h.reportRepo.FindByID(reportID)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "Report not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "Report not found"})
 		return
 	}
 
@@ -232,25 +253,31 @@ func (h *AdminHandler) UpdateReportStatus(w http.ResponseWriter, r *http.Request
 	report.ReviewedAt = &now
 
 	if err := h.reportRepo.Update(report); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to update report")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update report"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Report status updated successfully", report)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Report status updated successfully",
+		"data":    report,
+	})
 }
 
 // DeleteUser soft deletes a user (admin action)
-func (h *AdminHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
-	userID, err := getIDFromURL(r)
+func (h *AdminHandler) DeleteUser(c *gin.Context) {
+	userID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid user ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
 		return
 	}
 
 	if err := h.userRepo.Delete(userID); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to delete user")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete user"})
 		return
 	}
 
-	utils.RespondSuccess(w, "User deleted successfully", nil)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "User deleted successfully",
+		"data":    nil,
+	})
 }

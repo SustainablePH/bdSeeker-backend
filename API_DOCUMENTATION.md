@@ -1,7 +1,7 @@
 # API Endpoints Summary
 
 ## Base URL
-`http://localhost:8080/api/v1`
+`http://localhost:9000/api/v1`
 
 ## Authentication Endpoints
 

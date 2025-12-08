@@ -42,7 +42,8 @@ A comprehensive REST API backend for a job searching platform built with **Go, G
 - **Database**: PostgreSQL
 - **ORM**: GORM
 - **Authentication**: JWT (golang-jwt/jwt)
-- **Router**: Gorilla Mux
+- **Router**: Gin Web Framework
+- **Configuration**: Viper
 - **Password Hashing**: bcrypt
 - **Validation**: go-playground/validator
 
@@ -101,7 +102,8 @@ go mod tidy
 This will install:
 - GORM and PostgreSQL driver
 - JWT library
-- Gorilla Mux router
+- Gin web framework
+- Viper configuration management
 - Validator
 - Bcrypt for password hashing
 - And other dependencies
@@ -161,6 +163,25 @@ This will install:
    ```
 
 3. **Update the following values**:
+   
+   **Option A: Using Environment Variables (Recommended with Viper)**
+   ```bash
+   # Set environment variables directly
+   export DB_HOST=localhost
+   export DB_PORT=5432
+   export DB_USER=postgres
+   export DB_PASSWORD=your_password
+   export DB_NAME=bdseeker
+   export DB_SSLMODE=disable
+   export JWT_SECRET=your-super-secret-jwt-key
+   export JWT_EXPIRY=24h
+   export JWT_REFRESH_EXPIRY=168h
+   export SERVER_PORT=9000
+   export SERVER_HOST=0.0.0.0
+   export ENV=development
+   ```
+   
+   **Option B: Using .env file (Backward Compatible)**
    ```env
    # Database Configuration
    DB_HOST=localhost
@@ -176,14 +197,33 @@ This will install:
    JWT_REFRESH_EXPIRY=168h
 
    # Server Configuration
-   SERVER_PORT=8080
+   SERVER_PORT=9000
    SERVER_HOST=0.0.0.0
 
    # Environment
    ENV=development
    ```
+   
+   **Option C: Using config.yaml (New with Viper)**
+   Create a `config.yaml` file:
+   ```yaml
+   dbhost: localhost
+   dbport: "5432"
+   dbuser: postgres
+   dbpassword: postgres
+   dbname: bdseeker
+   dbsslmode: disable
+   jwtsecret: your-super-secret-jwt-key
+   jwtexpiry: 24h
+   jwtrefreshexpiry: 168h
+   serverport: "9000"
+   serverhost: 0.0.0.0
+   environment: development
+   ```
 
    **Important**: 
+   - Viper supports multiple configuration sources with priority: ENV vars > config file > defaults
+   - Environment variables take highest priority
    - Replace `DB_USER` and `DB_PASSWORD` with your PostgreSQL credentials
    - Change `JWT_SECRET` to a strong, random string in production
 
@@ -200,8 +240,8 @@ You should see:
 ```
 ✓ Database connection established successfully
 ✓ Database migrations completed successfully
-🚀 Server starting on 0.0.0.0:8080
-📚 API Documentation: http://0.0.0.0:8080/api/v1/health
+🚀 Server starting on 0.0.0.0:9000
+📚 API Documentation: http://0.0.0.0:9000/api/v1/health
 ```
 
 ### Method 2: Build and Run (Production-like)
@@ -218,7 +258,7 @@ go build -o bdseeker-api main.go
 
 Open your browser or use curl:
 ```bash
-curl http://localhost:8080/api/v1/health
+curl http://localhost:9000/api/v1/health
 ```
 
 You should see:
@@ -268,7 +308,7 @@ Failed:       0
 
 #### 1. Register a New User
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/register \
+curl -X POST http://localhost:9000/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "john@example.com",
@@ -280,7 +320,7 @@ curl -X POST http://localhost:8080/api/v1/auth/register \
 
 #### 2. Login
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/login \
+curl -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "john@example.com",
@@ -292,7 +332,7 @@ Save the token from the response for authenticated requests.
 
 #### 3. Get Current User (Protected Route)
 ```bash
-curl -X GET http://localhost:8080/api/v1/auth/me \
+curl -X GET http://localhost:9000/api/v1/auth/me \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
@@ -316,7 +356,7 @@ For detailed Postman usage, see [POSTMAN_GUIDE.md](POSTMAN_GUIDE.md)
 
 ### Quick Reference
 
-- **Base URL**: `http://localhost:8080/api/v1`
+- **Base URL**: `http://localhost:9000/api/v1`
 - **Authentication**: JWT Bearer token in `Authorization` header
 - **Content-Type**: `application/json`
 
@@ -382,8 +422,8 @@ bdSeeker-backend/
 
 **Solutions**:
 ```bash
-# Find process using port 8080
-lsof -i :8080
+# Find process using port 9000
+lsof -i :9000
 
 # Kill the process
 kill -9 <PID>
@@ -448,6 +488,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
+
+**Zubair Ahmed Rafi**
+- GitHub: [@walleeva2018](https://github.com/walleeva2018)
 
 **Bishworup**
 - GitHub: [@bishworup11](https://github.com/bishworup11)

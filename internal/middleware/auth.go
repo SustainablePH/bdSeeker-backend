@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"context"
 	"net/http"
 	"strings"
 
 	"github.com/bishworup11/bdSeeker-backend/internal/config"
 	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 )
 
 type contextKey string
@@ -18,26 +18,28 @@ const (
 )
 
 // AuthMiddleware validates JWT tokens from cookies or Authorization header
-func AuthMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
 		var tokenString string
 
 		// First, try to get token from cookie (preferred for browser clients)
-		token, err := utils.GetAuthCookie(r)
+		token, err := utils.GetAuthCookie(c.Request)
 		if err == nil && token != "" {
 			tokenString = token
 		} else {
 			// Fallback to Authorization header (for API clients like Postman)
-			authHeader := r.Header.Get("Authorization")
+			authHeader := c.GetHeader("Authorization")
 			if authHeader == "" {
-				utils.RespondError(w, http.StatusUnauthorized, "Authentication required")
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication required"})
+				c.Abort()
 				return
 			}
 
 			// Extract token from "Bearer <token>"
 			parts := strings.Split(authHeader, " ")
 			if len(parts) != 2 || parts[0] != "Bearer" {
-				utils.RespondError(w, http.StatusUnauthorized, "Invalid authorization header format")
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization header format"})
+				c.Abort()
 				return
 			}
 			tokenString = parts[1]
@@ -47,63 +49,83 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		claims, err := utils.ValidateToken(tokenString, config.AppConfig.JWTSecret)
 		if err != nil {
 			// Clear cookie if token is invalid
-			utils.ClearAuthCookie(w)
-			utils.RespondError(w, http.StatusUnauthorized, "Invalid or expired token")
+			utils.ClearAuthCookie(c.Writer)
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+			c.Abort()
 			return
 		}
 
-		// Set user info in context
-		ctx := context.WithValue(r.Context(), UserIDKey, claims.UserID)
-		ctx = context.WithValue(ctx, UserEmailKey, claims.Email)
-		ctx = context.WithValue(ctx, UserRoleKey, claims.Role)
+		// Set user info in Gin context
+		c.Set(string(UserIDKey), claims.UserID)
+		c.Set(string(UserEmailKey), claims.Email)
+		c.Set(string(UserRoleKey), claims.Role)
 
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
-}
-
-// RoleMiddleware checks if the user has one of the allowed roles
-func RoleMiddleware(allowedRoles ...string) func(http.Handler) http.Handler {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			userRole, ok := r.Context().Value(UserRoleKey).(string)
-			if !ok {
-				utils.RespondError(w, http.StatusUnauthorized, "User role not found in context")
-				return
-			}
-
-			// Check if user role is in allowed roles
-			allowed := false
-			for _, role := range allowedRoles {
-				if userRole == role {
-					allowed = true
-					break
-				}
-			}
-
-			if !allowed {
-				utils.RespondError(w, http.StatusForbidden, "Insufficient permissions")
-				return
-			}
-
-			next.ServeHTTP(w, r)
-		})
+		c.Next()
 	}
 }
 
-// GetUserID extracts user ID from request context
-func GetUserID(r *http.Request) (uint, bool) {
-	userID, ok := r.Context().Value(UserIDKey).(uint)
+// RoleMiddleware checks if the user has one of the allowed roles
+func RoleMiddleware(allowedRoles ...string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userRoleVal, exists := c.Get(string(UserRoleKey))
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "User role not found in context"})
+			c.Abort()
+			return
+		}
+
+		userRole, ok := userRoleVal.(string)
+		if !ok {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user role format"})
+			c.Abort()
+			return
+		}
+
+		// Check if user role is in allowed roles
+		allowed := false
+		for _, role := range allowedRoles {
+			if userRole == role {
+				allowed = true
+				break
+			}
+		}
+
+		if !allowed {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Insufficient permissions"})
+			c.Abort()
+			return
+		}
+
+		c.Next()
+	}
+}
+
+// GetUserID extracts user ID from Gin context
+func GetUserID(c *gin.Context) (uint, bool) {
+	userIDVal, exists := c.Get(string(UserIDKey))
+	if !exists {
+		return 0, false
+	}
+	userID, ok := userIDVal.(uint)
 	return userID, ok
 }
 
-// GetUserEmail extracts user email from request context
-func GetUserEmail(r *http.Request) (string, bool) {
-	email, ok := r.Context().Value(UserEmailKey).(string)
+// GetUserEmail extracts user email from Gin context
+func GetUserEmail(c *gin.Context) (string, bool) {
+	emailVal, exists := c.Get(string(UserEmailKey))
+	if !exists {
+		return "", false
+	}
+	email, ok := emailVal.(string)
 	return email, ok
 }
 
-// GetUserRole extracts user role from request context
-func GetUserRole(r *http.Request) (string, bool) {
-	role, ok := r.Context().Value(UserRoleKey).(string)
+// GetUserRole extracts user role from Gin context
+func GetUserRole(c *gin.Context) (string, bool) {
+	roleVal, exists := c.Get(string(UserRoleKey))
+	if !exists {
+		return "", false
+	}
+	role, ok := roleVal.(string)
 	return role, ok
 }

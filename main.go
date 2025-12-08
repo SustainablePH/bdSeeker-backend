@@ -10,7 +10,7 @@ import (
 	"github.com/bishworup11/bdSeeker-backend/internal/middleware"
 	"github.com/bishworup11/bdSeeker-backend/internal/repositories"
 	"github.com/bishworup11/bdSeeker-backend/internal/services"
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -50,97 +50,110 @@ func main() {
 	techHandler := handlers.NewTechHandler()
 	adminHandler := handlers.NewAdminHandler()
 
-	// Setup router
-	router := mux.NewRouter()
+	// Setup Gin router
+	// Use gin.New() for custom middleware control
+	router := gin.New()
 
 	// Apply global middleware
-	router.Use(middleware.CORSMiddleware)
-	router.Use(middleware.ErrorHandler)
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
+	router.Use(middleware.CORSMiddleware())
+	router.Use(middleware.ErrorHandler())
 
 	// API routes
-	api := router.PathPrefix("/api/v1").Subrouter()
+	api := router.Group("/api/v1")
 
 	// Health check
-	api.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status":"ok"}`))
-	}).Methods("GET")
+	api.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status": "ok"})
+	})
 
 	// Auth routes (public)
-	api.HandleFunc("/auth/register", authHandler.Register).Methods("POST")
-	api.HandleFunc("/auth/login", authHandler.Login).Methods("POST")
-	api.HandleFunc("/auth/logout", authHandler.Logout).Methods("POST")
+	api.POST("/auth/register", authHandler.Register)
+	api.POST("/auth/login", authHandler.Login)
+	api.POST("/auth/logout", authHandler.Logout)
 
 	// Protected auth routes
-	authRoutes := api.PathPrefix("/auth").Subrouter()
-	authRoutes.Use(middleware.AuthMiddleware)
-	authRoutes.HandleFunc("/me", authHandler.GetMe).Methods("GET")
+	authRoutes := api.Group("/auth")
+	authRoutes.Use(middleware.AuthMiddleware())
+	{
+		authRoutes.GET("/me", authHandler.GetMe)
+	}
 
 	// Technology routes (public read, admin write)
-	api.HandleFunc("/technologies", techHandler.ListTechnologies).Methods("GET")
-	api.HandleFunc("/languages", techHandler.ListLanguages).Methods("GET")
+	api.GET("/technologies", techHandler.ListTechnologies)
+	api.GET("/languages", techHandler.ListLanguages)
 
-	// Company routes
-	api.HandleFunc("/companies", companyHandler.ListCompanies).Methods("GET")
-	api.HandleFunc("/companies/{id}", companyHandler.GetCompany).Methods("GET")
-	api.HandleFunc("/companies/{id}/reviews", companyHandler.ListReviews).Methods("GET")
+	// Company routes (public)
+	api.GET("/companies", companyHandler.ListCompanies)
+	api.GET("/companies/:id", companyHandler.GetCompany)
+	api.GET("/companies/:id/reviews", companyHandler.ListReviews)
 
 	// Protected company routes
-	companyRoutes := api.PathPrefix("/companies").Subrouter()
-	companyRoutes.Use(middleware.AuthMiddleware)
-	companyRoutes.HandleFunc("", companyHandler.CreateCompany).Methods("POST")
-	companyRoutes.HandleFunc("/{id}/ratings", companyHandler.RateCompany).Methods("POST")
-	companyRoutes.HandleFunc("/{id}/reviews", companyHandler.CreateReview).Methods("POST")
+	companyRoutes := api.Group("/companies")
+	companyRoutes.Use(middleware.AuthMiddleware())
+	{
+		companyRoutes.POST("", companyHandler.CreateCompany)
+		companyRoutes.POST("/:id/ratings", companyHandler.RateCompany)
+		companyRoutes.POST("/:id/reviews", companyHandler.CreateReview)
+	}
 
-	// Developer routes
-	api.HandleFunc("/developers", developerHandler.ListDevelopers).Methods("GET")
-	api.HandleFunc("/developers/{id}", developerHandler.GetDeveloper).Methods("GET")
+	// Developer routes (public)
+	api.GET("/developers", developerHandler.ListDevelopers)
+	api.GET("/developers/:id", developerHandler.GetDeveloper)
 
 	// Protected developer routes
-	devRoutes := api.PathPrefix("/developers").Subrouter()
-	devRoutes.Use(middleware.AuthMiddleware)
-	devRoutes.HandleFunc("", developerHandler.CreateDeveloper).Methods("POST")
+	devRoutes := api.Group("/developers")
+	devRoutes.Use(middleware.AuthMiddleware())
+	{
+		devRoutes.POST("", developerHandler.CreateDeveloper)
+	}
 
-	// Job routes
-	api.HandleFunc("/jobs", jobHandler.ListJobs).Methods("GET")
-	api.HandleFunc("/jobs/{id}", jobHandler.GetJob).Methods("GET")
+	// Job routes (public)
+	api.GET("/jobs", jobHandler.ListJobs)
+	api.GET("/jobs/:id", jobHandler.GetJob)
 
 	// Protected job routes
-	jobRoutes := api.PathPrefix("/jobs").Subrouter()
-	jobRoutes.Use(middleware.AuthMiddleware)
-	jobRoutes.HandleFunc("", jobHandler.CreateJob).Methods("POST")
-	jobRoutes.HandleFunc("/{id}/reactions", jobHandler.ReactToJob).Methods("POST")
-	jobRoutes.HandleFunc("/{id}/comments", jobHandler.CommentOnJob).Methods("POST")
+	jobRoutes := api.Group("/jobs")
+	jobRoutes.Use(middleware.AuthMiddleware())
+	{
+		jobRoutes.POST("", jobHandler.CreateJob)
+		jobRoutes.POST("/:id/reactions", jobHandler.ReactToJob)
+		jobRoutes.POST("/:id/comments", jobHandler.CommentOnJob)
+	}
 
 	// Admin routes (protected, admin only)
-	adminRoutes := api.PathPrefix("/admin").Subrouter()
-	adminRoutes.Use(middleware.AuthMiddleware)
+	adminRoutes := api.Group("/admin")
+	adminRoutes.Use(middleware.AuthMiddleware())
 	adminRoutes.Use(middleware.RoleMiddleware("admin"))
-	
-	// Admin - Statistics
-	adminRoutes.HandleFunc("/stats", adminHandler.GetStats).Methods("GET")
-	
-	// Admin - User Management
-	adminRoutes.HandleFunc("/users", adminHandler.ListUsers).Methods("GET")
-	adminRoutes.HandleFunc("/users/{id}", adminHandler.DeleteUser).Methods("DELETE")
-	
-	// Admin - Review Management
-	adminRoutes.HandleFunc("/reviews/pending", adminHandler.ListPendingReviews).Methods("GET")
-	adminRoutes.HandleFunc("/reviews/{id}/approve", adminHandler.ApproveReview).Methods("PUT")
-	adminRoutes.HandleFunc("/reviews/{id}/reject", adminHandler.RejectReview).Methods("DELETE")
-	
-	// Admin - Comment Management
-	adminRoutes.HandleFunc("/comments/{id}/approve", adminHandler.ApproveComment).Methods("PUT")
-	
-	// Admin - Report Management
-	adminRoutes.HandleFunc("/reports", adminHandler.ListReports).Methods("GET")
-	adminRoutes.HandleFunc("/reports/{id}", adminHandler.UpdateReportStatus).Methods("PUT")
+	{
+		// Admin - Statistics
+		adminRoutes.GET("/stats", adminHandler.GetStats)
+
+		// Admin - User Management
+		adminRoutes.GET("/users", adminHandler.ListUsers)
+		adminRoutes.DELETE("/users/:id", adminHandler.DeleteUser)
+
+		// Admin - Review Management
+		adminRoutes.GET("/reviews/pending", adminHandler.ListPendingReviews)
+		adminRoutes.PUT("/reviews/:id/approve", adminHandler.ApproveReview)
+		adminRoutes.DELETE("/reviews/:id/reject", adminHandler.RejectReview)
+
+		// Admin - Comment Management
+		adminRoutes.PUT("/comments/:id/approve", adminHandler.ApproveComment)
+
+		// Admin - Report Management
+		adminRoutes.GET("/reports", adminHandler.ListReports)
+		adminRoutes.PUT("/reports/:id", adminHandler.UpdateReportStatus)
+	}
 
 	// Start server
 	addr := cfg.ServerHost + ":" + cfg.ServerPort
 	log.Printf("🚀 Server starting on %s", addr)
 	log.Printf("📚 API Documentation: http://%s/api/v1/health", addr)
-	if err := http.ListenAndServe(addr, router); err != nil {
+	log.Printf("🔧 Environment: %s", cfg.Environment)
+	
+	if err := router.Run(addr); err != nil {
 		log.Fatalf("Server failed to start: %v", err)
 	}
 }

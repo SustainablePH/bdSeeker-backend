@@ -5,7 +5,7 @@ import (
 
 	"github.com/bishworup11/bdSeeker-backend/internal/database"
 	"github.com/bishworup11/bdSeeker-backend/internal/repositories"
-	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 )
 
 type TechHandler struct {
@@ -19,27 +19,33 @@ func NewTechHandler() *TechHandler {
 }
 
 // ListTechnologies GET /api/v1/technologies
-func (h *TechHandler) ListTechnologies(w http.ResponseWriter, r *http.Request) {
-	search := r.URL.Query().Get("search")
-	
+func (h *TechHandler) ListTechnologies(c *gin.Context) {
+	search := c.Query("search")
+
 	techs, err := h.repo.ListTechnologies(search)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch technologies")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch technologies"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Technologies retrieved successfully", techs)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Technologies retrieved successfully",
+		"data":    techs,
+	})
 }
 
 // ListLanguages GET /api/v1/languages
-func (h *TechHandler) ListLanguages(w http.ResponseWriter, r *http.Request) {
-	search := r.URL.Query().Get("search")
-	
+func (h *TechHandler) ListLanguages(c *gin.Context) {
+	search := c.Query("search")
+
 	langs, err := h.repo.ListLanguages(search)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch languages")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch languages"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Languages retrieved successfully", langs)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Languages retrieved successfully",
+		"data":    langs,
+	})
 }

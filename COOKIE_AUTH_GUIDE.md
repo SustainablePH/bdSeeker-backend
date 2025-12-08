@@ -47,7 +47,7 @@ If the token expires:
 ```javascript
 // Login - No need to store token!
 async function login(email, password) {
-  const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+  const response = await fetch('http://localhost:9000/api/v1/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ async function login(email, password) {
 
 // Make authenticated requests
 async function getProfile() {
-  const response = await fetch('http://localhost:8080/api/v1/auth/me', {
+  const response = await fetch('http://localhost:9000/api/v1/auth/me', {
     method: 'GET',
     credentials: 'include', // IMPORTANT: Include cookies
   });
@@ -85,7 +85,7 @@ async function getProfile() {
 
 // Logout
 async function logout() {
-  await fetch('http://localhost:8080/api/v1/auth/logout', {
+  await fetch('http://localhost:9000/api/v1/auth/logout', {
     method: 'POST',
     credentials: 'include', // IMPORTANT: Include cookies
   });
@@ -103,7 +103,7 @@ import axios from 'axios';
 
 // Configure axios to include cookies
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8080/api/v1';
+axios.defaults.baseURL = 'http://localhost:9000/api/v1';
 
 // Login
 async function login(email, password) {
@@ -174,7 +174,7 @@ async function authenticatedFetch(url, options = {}) {
 
 // Usage
 async function fetchJobs() {
-  const response = await authenticatedFetch('http://localhost:8080/api/v1/jobs');
+  const response = await authenticatedFetch('http://localhost:9000/api/v1/jobs');
   const data = await response.json();
   return data;
 }
@@ -301,7 +301,7 @@ For mobile apps (React Native, Flutter), you can still use the Authorization hea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 async function login(email, password) {
-  const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+  const response = await fetch('http://localhost:9000/api/v1/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -340,19 +340,19 @@ async function makeAuthenticatedRequest(url) {
 
 ### Login and save cookie
 ```bash
-curl -c cookies.txt -X POST http://localhost:8080/api/v1/auth/login \
+curl -c cookies.txt -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@bdseeker.com","password":"admin123"}'
 ```
 
 ### Use cookie for authenticated request
 ```bash
-curl -b cookies.txt -X GET http://localhost:8080/api/v1/auth/me
+curl -b cookies.txt -X GET http://localhost:9000/api/v1/auth/me
 ```
 
 ### Logout
 ```bash
-curl -b cookies.txt -c cookies.txt -X POST http://localhost:8080/api/v1/auth/logout
+curl -b cookies.txt -c cookies.txt -X POST http://localhost:9000/api/v1/auth/logout
 ```
 
 ---

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -10,6 +9,7 @@ import (
 	"github.com/bishworup11/bdSeeker-backend/internal/models"
 	"github.com/bishworup11/bdSeeker-backend/internal/repositories"
 	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -24,14 +24,14 @@ func NewDeveloperHandler() *DeveloperHandler {
 }
 
 // ListDevelopers GET /api/v1/developers
-func (h *DeveloperHandler) ListDevelopers(w http.ResponseWriter, r *http.Request) {
-	page, limit := getPaginationFromQuery(r)
-	
+func (h *DeveloperHandler) ListDevelopers(c *gin.Context) {
+	page, limit := getPaginationFromQuery(c)
+
 	var techIDs, langIDs []uint
-	
+
 	developers, total, err := h.repo.List(page, limit, techIDs, langIDs)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch developers")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch developers"})
 		return
 	}
 
@@ -43,47 +43,53 @@ func (h *DeveloperHandler) ListDevelopers(w http.ResponseWriter, r *http.Request
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Developers retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Developers retrieved successfully",
+		"data":    result,
+	})
 }
 
 // GetDeveloper GET /api/v1/developers/:id
-func (h *DeveloperHandler) GetDeveloper(w http.ResponseWriter, r *http.Request) {
-	id, err := getIDFromURL(r)
+func (h *DeveloperHandler) GetDeveloper(c *gin.Context) {
+	id, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid developer ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid developer ID"})
 		return
 	}
 
 	developer, err := h.repo.FindByID(id)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "Developer not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "Developer not found"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Developer retrieved successfully", developer)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Developer retrieved successfully",
+		"data":    developer,
+	})
 }
 
 // CreateDeveloper POST /api/v1/developers
-func (h *DeveloperHandler) CreateDeveloper(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
+func (h *DeveloperHandler) CreateDeveloper(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
 
 	var req struct {
 		Bio string `json:"bio"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
 	// Check if user already has a developer profile
 	existing, err := h.repo.FindByUserID(userID)
 	if err == nil && existing.ID > 0 {
-		utils.RespondError(w, http.StatusBadRequest, "User already has a developer profile")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User already has a developer profile"})
 		return
 	}
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to check existing profile")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing profile"})
 		return
 	}
 
@@ -93,9 +99,12 @@ func (h *DeveloperHandler) CreateDeveloper(w http.ResponseWriter, r *http.Reques
 	}
 
 	if err := h.repo.Create(developer); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create developer profile")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create developer profile"})
 		return
 	}
 
-	utils.RespondCreated(w, "Developer profile created successfully", developer)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Developer profile created successfully",
+		"data":    developer,
+	})
 }

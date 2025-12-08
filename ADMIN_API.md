@@ -16,14 +16,14 @@ The default admin user is automatically created when the application starts for 
 All admin endpoints require:
 - **Authentication**: JWT Bearer token
 - **Authorization**: Admin role
-- **Base URL**: `http://localhost:8080/api/v1/admin`
+- **Base URL**: `http://localhost:9000/api/v1/admin`
 
 ### Authentication
 
 First, login as admin to get the token:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/login \
+curl -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "admin@bdseeker.com",
@@ -62,7 +62,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X GET http://localhost:8080/api/v1/admin/stats \
+curl -X GET http://localhost:9000/api/v1/admin/stats \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -108,7 +108,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X GET "http://localhost:8080/api/v1/admin/users?page=1&limit=10" \
+curl -X GET "http://localhost:9000/api/v1/admin/users?page=1&limit=10" \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -121,7 +121,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X DELETE http://localhost:8080/api/v1/admin/users/5 \
+curl -X DELETE http://localhost:9000/api/v1/admin/users/5 \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -162,7 +162,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X GET "http://localhost:8080/api/v1/admin/reviews/pending?page=1&limit=10" \
+curl -X GET "http://localhost:9000/api/v1/admin/reviews/pending?page=1&limit=10" \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -175,7 +175,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X PUT http://localhost:8080/api/v1/admin/reviews/1/approve \
+curl -X PUT http://localhost:9000/api/v1/admin/reviews/1/approve \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -205,7 +205,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X DELETE http://localhost:8080/api/v1/admin/reviews/1/reject \
+curl -X DELETE http://localhost:9000/api/v1/admin/reviews/1/reject \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -222,7 +222,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X PUT http://localhost:8080/api/v1/admin/comments/5/approve \
+curl -X PUT http://localhost:9000/api/v1/admin/comments/5/approve \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -270,7 +270,7 @@ Authorization: Bearer <admin_token>
 
 **Example:**
 ```bash
-curl -X GET "http://localhost:8080/api/v1/admin/reports?status=pending" \
+curl -X GET "http://localhost:9000/api/v1/admin/reports?status=pending" \
   -H "Authorization: Bearer <admin_token>"
 ```
 
@@ -293,7 +293,7 @@ Content-Type: application/json
 
 **Example:**
 ```bash
-curl -X PUT http://localhost:8080/api/v1/admin/reports/1 \
+curl -X PUT http://localhost:9000/api/v1/admin/reports/1 \
   -H "Authorization: Bearer <admin_token>" \
   -H "Content-Type: application/json" \
   -d '{"status": "resolved"}'
@@ -355,7 +355,7 @@ curl -X PUT http://localhost:8080/api/v1/admin/reports/1 \
 #!/bin/bash
 
 # Login as admin
-ADMIN_TOKEN=$(curl -s -X POST http://localhost:8080/api/v1/auth/login \
+ADMIN_TOKEN=$(curl -s -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@bdseeker.com","password":"admin123"}' \
   | jq -r '.data.token')
@@ -364,22 +364,22 @@ echo "Admin Token: $ADMIN_TOKEN"
 
 # Get stats
 echo "\n=== Platform Statistics ==="
-curl -s -X GET http://localhost:8080/api/v1/admin/stats \
+curl -s -X GET http://localhost:9000/api/v1/admin/stats \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 
 # List users
 echo "\n=== All Users ==="
-curl -s -X GET "http://localhost:8080/api/v1/admin/users?page=1&limit=5" \
+curl -s -X GET "http://localhost:9000/api/v1/admin/users?page=1&limit=5" \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 
 # List pending reviews
 echo "\n=== Pending Reviews ==="
-curl -s -X GET "http://localhost:8080/api/v1/admin/reviews/pending?page=1&limit=5" \
+curl -s -X GET "http://localhost:9000/api/v1/admin/reviews/pending?page=1&limit=5" \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 
 # List reports
 echo "\n=== Reports ==="
-curl -s -X GET "http://localhost:8080/api/v1/admin/reports?page=1&limit=5" \
+curl -s -X GET "http://localhost:9000/api/v1/admin/reports?page=1&limit=5" \
   -H "Authorization: Bearer $ADMIN_TOKEN" | jq .
 ```
 
@@ -392,22 +392,22 @@ Save as `test_admin.sh`, make executable with `chmod +x test_admin.sh`, and run!
 ### 1. Moderate Company Reviews
 ```bash
 # List pending reviews
-curl -X GET "http://localhost:8080/api/v1/admin/reviews/pending" \
+curl -X GET "http://localhost:9000/api/v1/admin/reviews/pending" \
   -H "Authorization: Bearer <admin_token>"
 
 # Approve a review
-curl -X PUT http://localhost:8080/api/v1/admin/reviews/1/approve \
+curl -X PUT http://localhost:9000/api/v1/admin/reviews/1/approve \
   -H "Authorization: Bearer <admin_token>"
 ```
 
 ### 2. Handle User Reports
 ```bash
 # List pending reports
-curl -X GET "http://localhost:8080/api/v1/admin/reports?status=pending" \
+curl -X GET "http://localhost:9000/api/v1/admin/reports?status=pending" \
   -H "Authorization: Bearer <admin_token>"
 
 # Resolve a report
-curl -X PUT http://localhost:8080/api/v1/admin/reports/1 \
+curl -X PUT http://localhost:9000/api/v1/admin/reports/1 \
   -H "Authorization: Bearer <admin_token>" \
   -H "Content-Type: application/json" \
   -d '{"status": "resolved"}'
@@ -416,18 +416,18 @@ curl -X PUT http://localhost:8080/api/v1/admin/reports/1 \
 ### 3. Monitor Platform Growth
 ```bash
 # Get current statistics
-curl -X GET http://localhost:8080/api/v1/admin/stats \
+curl -X GET http://localhost:9000/api/v1/admin/stats \
   -H "Authorization: Bearer <admin_token>"
 ```
 
 ### 4. Manage Users
 ```bash
 # List all developers
-curl -X GET "http://localhost:8080/api/v1/admin/users?role=developer" \
+curl -X GET "http://localhost:9000/api/v1/admin/users?role=developer" \
   -H "Authorization: Bearer <admin_token>"
 
 # Delete a problematic user
-curl -X DELETE http://localhost:8080/api/v1/admin/users/5 \
+curl -X DELETE http://localhost:9000/api/v1/admin/users/5 \
   -H "Authorization: Bearer <admin_token>"
 ```
 

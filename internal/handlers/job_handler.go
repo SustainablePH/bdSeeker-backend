@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/bishworup11/bdSeeker-backend/internal/database"
@@ -9,6 +8,7 @@ import (
 	"github.com/bishworup11/bdSeeker-backend/internal/models"
 	"github.com/bishworup11/bdSeeker-backend/internal/repositories"
 	"github.com/bishworup11/bdSeeker-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 )
 
 type JobHandler struct {
@@ -25,27 +25,27 @@ func NewJobHandler() *JobHandler {
 }
 
 // ListJobs GET /api/v1/jobs
-func (h *JobHandler) ListJobs(w http.ResponseWriter, r *http.Request) {
-	page, limit := getPaginationFromQuery(r)
-	
+func (h *JobHandler) ListJobs(c *gin.Context) {
+	page, limit := getPaginationFromQuery(c)
+
 	filters := make(map[string]interface{})
-	
-	if workMode := r.URL.Query().Get("work_mode"); workMode != "" {
+
+	if workMode := c.Query("work_mode"); workMode != "" {
 		filters["work_mode"] = workMode
 	}
-	if location := r.URL.Query().Get("location"); location != "" {
+	if location := c.Query("location"); location != "" {
 		filters["location"] = location
 	}
-	if search := r.URL.Query().Get("search"); search != "" {
+	if search := c.Query("search"); search != "" {
 		filters["search"] = search
 	}
-	if sortBy := r.URL.Query().Get("sort_by"); sortBy != "" {
+	if sortBy := c.Query("sort_by"); sortBy != "" {
 		filters["sort_by"] = sortBy
 	}
 
 	jobs, total, err := h.repo.List(page, limit, filters)
 	if err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to fetch jobs")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch jobs"})
 		return
 	}
 
@@ -57,30 +57,36 @@ func (h *JobHandler) ListJobs(w http.ResponseWriter, r *http.Request) {
 		TotalPages: utils.CalculateTotalPages(total, limit),
 	}
 
-	utils.RespondSuccess(w, "Jobs retrieved successfully", result)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Jobs retrieved successfully",
+		"data":    result,
+	})
 }
 
 // GetJob GET /api/v1/jobs/:id
-func (h *JobHandler) GetJob(w http.ResponseWriter, r *http.Request) {
-	id, err := getIDFromURL(r)
+func (h *JobHandler) GetJob(c *gin.Context) {
+	id, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid job ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid job ID"})
 		return
 	}
 
 	job, err := h.repo.FindByID(id)
 	if err != nil {
-		utils.RespondError(w, http.StatusNotFound, "Job not found")
+		c.JSON(http.StatusNotFound, gin.H{"error": "Job not found"})
 		return
 	}
 
-	utils.RespondSuccess(w, "Job retrieved successfully", job)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Job retrieved successfully",
+		"data":    job,
+	})
 }
 
 // CreateJob POST /api/v1/jobs
-func (h *JobHandler) CreateJob(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
-	userRole, _ := middleware.GetUserRole(r)
+func (h *JobHandler) CreateJob(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
+	userRole, _ := middleware.GetUserRole(c)
 
 	var req struct {
 		Title              string  `json:"title" validate:"required"`
@@ -93,8 +99,8 @@ func (h *JobHandler) CreateJob(w http.ResponseWriter, r *http.Request) {
 		Location           string  `json:"location"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
@@ -103,7 +109,7 @@ func (h *JobHandler) CreateJob(w http.ResponseWriter, r *http.Request) {
 		// Get company profile for user
 		company, err := h.companyRepo.FindByUserID(userID)
 		if err != nil {
-			utils.RespondError(w, http.StatusBadRequest, "User must have a company profile to post jobs")
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User must have a company profile to post jobs"})
 			return
 		}
 		companyID = company.ID
@@ -122,19 +128,22 @@ func (h *JobHandler) CreateJob(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.repo.Create(job); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create job")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create job"})
 		return
 	}
 
-	utils.RespondCreated(w, "Job created successfully", job)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Job created successfully",
+		"data":    job,
+	})
 }
 
 // ReactToJob POST /api/v1/jobs/:id/reactions
-func (h *JobHandler) ReactToJob(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
-	jobID, err := getIDFromURL(r)
+func (h *JobHandler) ReactToJob(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
+	jobID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid job ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid job ID"})
 		return
 	}
 
@@ -142,8 +151,8 @@ func (h *JobHandler) ReactToJob(w http.ResponseWriter, r *http.Request) {
 		Type string `json:"type" validate:"required,oneof=like bookmark apply"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
@@ -152,7 +161,10 @@ func (h *JobHandler) ReactToJob(w http.ResponseWriter, r *http.Request) {
 	if err == nil && existing != nil {
 		existing.Type = req.Type
 		h.repo.UpdateReaction(existing)
-		utils.RespondSuccess(w, "Reaction updated successfully", existing)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Reaction updated successfully",
+			"data":    existing,
+		})
 		return
 	}
 
@@ -163,19 +175,22 @@ func (h *JobHandler) ReactToJob(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.repo.CreateReaction(reaction); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create reaction")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create reaction"})
 		return
 	}
 
-	utils.RespondCreated(w, "Reaction created successfully", reaction)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Reaction created successfully",
+		"data":    reaction,
+	})
 }
 
 // CommentOnJob POST /api/v1/jobs/:id/comments
-func (h *JobHandler) CommentOnJob(w http.ResponseWriter, r *http.Request) {
-	userID, _ := middleware.GetUserID(r)
-	jobID, err := getIDFromURL(r)
+func (h *JobHandler) CommentOnJob(c *gin.Context) {
+	userID, _ := middleware.GetUserID(c)
+	jobID, err := getIDFromURL(c)
 	if err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid job ID")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid job ID"})
 		return
 	}
 
@@ -183,8 +198,8 @@ func (h *JobHandler) CommentOnJob(w http.ResponseWriter, r *http.Request) {
 		Content string `json:"content" validate:"required"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
@@ -195,9 +210,12 @@ func (h *JobHandler) CommentOnJob(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.repo.CreateComment(comment); err != nil {
-		utils.RespondError(w, http.StatusInternalServerError, "Failed to create comment")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create comment"})
 		return
 	}
 
-	utils.RespondCreated(w, "Comment created successfully", comment)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Comment created successfully",
+		"data":    comment,
+	})
 }

@@ -35,7 +35,7 @@
 ### Frontend (Simple!)
 ```javascript
 // Login - Cookie is automatically set!
-await fetch('http://localhost:8080/api/v1/auth/login', {
+await fetch('http://localhost:9000/api/v1/auth/login', {
   method: 'POST',
   credentials: 'include', // Important!
   headers: { 'Content-Type': 'application/json' },
@@ -43,12 +43,12 @@ await fetch('http://localhost:8080/api/v1/auth/login', {
 });
 
 // Authenticated request - Cookie is automatically sent!
-await fetch('http://localhost:8080/api/v1/auth/me', {
+await fetch('http://localhost:9000/api/v1/auth/me', {
   credentials: 'include', // Important!
 });
 
 // Logout - Cookie is automatically cleared!
-await fetch('http://localhost:8080/api/v1/auth/logout', {
+await fetch('http://localhost:9000/api/v1/auth/logout', {
   method: 'POST',
   credentials: 'include',
 });
@@ -83,15 +83,15 @@ await fetch('http://localhost:8080/api/v1/auth/logout', {
 ### With curl (Cookies)
 ```bash
 # Login and save cookie
-curl -c cookies.txt -X POST http://localhost:8080/api/v1/auth/login \
+curl -c cookies.txt -X POST http://localhost:9000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@bdseeker.com","password":"admin123"}'
 
 # Use cookie for request
-curl -b cookies.txt http://localhost:8080/api/v1/auth/me
+curl -b cookies.txt http://localhost:9000/api/v1/auth/me
 
 # Logout
-curl -b cookies.txt -X POST http://localhost:8080/api/v1/auth/logout
+curl -b cookies.txt -X POST http://localhost:9000/api/v1/auth/logout
 ```
 
 ### With Postman (Still Works!)
@@ -106,7 +106,7 @@ curl -b cookies.txt -X POST http://localhost:8080/api/v1/auth/logout
 ```javascript
 // Configure axios
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8080/api/v1';
+axios.defaults.baseURL = 'http://localhost:9000/api/v1';
 
 // Auto-redirect on 401
 axios.interceptors.response.use(
